@@ -162,8 +162,8 @@ export default function Canvas({ aiNodes, aiEdges, selectedRegion = "eu-north-1"
         },
       }));
 
-      setNodes(nodesWithConnections);
-      setEdges(aiEdges);
+      setNodes(nodesWithConnections as any);
+      setEdges(aiEdges as any);
       setElasticIPAssociation([]);
       if (onAiApplied) onAiApplied();
     }

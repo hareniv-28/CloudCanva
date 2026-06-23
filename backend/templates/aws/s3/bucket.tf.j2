@@ -1,0 +1,30 @@
+resource "random_id" "{{ id.replace('-', '_') }}_suffix" {
+  byte_length = 4
+}
+
+resource "aws_s3_bucket" "{{ id.replace('-', '_') }}" {
+  bucket = "{{ bucket | default(name | default(id)) }}-${random_id.{{ id.replace('-', '_') }}_suffix.hex}"
+
+  tags = {
+    Name = "{{ name | default(bucket | default(id)) }}"
+    {% if tags is defined and tags %}
+    {% for key, value in tags.items() %}
+    {{ key }} = "{{ value }}"
+    {% endfor %}
+    {% endif %}
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+{% if versioning is defined and versioning and versioning.enabled is defined and versioning.enabled %}
+resource "aws_s3_bucket_versioning" "{{ id.replace('-', '_') }}_versioning" {
+  bucket = aws_s3_bucket.{{ id.replace('-', '_') }}.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+{% endif %}

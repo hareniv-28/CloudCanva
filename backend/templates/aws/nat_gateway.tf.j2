@@ -1,0 +1,29 @@
+resource "aws_nat_gateway" "{{ id.replace('-', '_') }}" {
+  {% if refs is defined and refs.eip is defined %}
+  allocation_id = aws_eip.{{ refs.eip.replace('-','_') }}.id
+  {% endif %}
+  {% if refs is defined and refs.subnet is defined %}
+  subnet_id     = aws_subnet.{{refs.subnet.replace('-','_') }}.id
+  {% endif %}
+
+  {% if connectivity_type is defined and connectivity_type %}
+  connectivity_type = "{{ connectivity_type }}"
+  {% endif %}
+
+  {% if private_ip is defined and private_ip %}
+  private_ip = "{{ private_ip }}"
+  {% endif %}
+
+  tags = {
+    Name = "{{ name | default('') }}"
+    {% if tags is defined and tags %}
+    {% for key, value in tags.items() %}
+    {{ key }} = "{{ value }}"
+    {% endfor %}
+    {% endif %}
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}

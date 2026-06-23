@@ -1,0 +1,27 @@
+resource "aws_lb_target_group" "{{ id.replace('-', '_') }}" {
+  name     = "{{ name | default(id | replace('_', '-')) }}"
+  port     = {{ port | default(80) }}
+  protocol = "{{ protocol | default('HTTP') }}"
+
+  {% if refs is defined and refs.vpc is defined %}
+  vpc_id = aws_vpc.{{ refs.vpc.replace('-', '_') }}.id
+  {% endif %}
+
+  health_check {
+    path                = "{{ health_check_path | default('/') }}"
+    protocol            = "{{ protocol | default('HTTP') }}"
+    healthy_threshold   = 3
+    unhealthy_threshold = 3
+    timeout             = 5
+    interval            = 30
+  }
+
+  tags = {
+    Name = "{{ name | default('') }}"
+    {% if tags is defined and tags %}
+    {% for key, value in tags.items() %}
+    {{ key }} = "{{ value }}"
+    {% endfor %}
+    {% endif %}
+  }
+}

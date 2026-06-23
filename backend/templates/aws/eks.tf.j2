@@ -1,0 +1,23 @@
+resource "aws_eks_cluster" "{{ id.replace('-', '_') }}" {
+  name     = "{{ name | default(id) }}"
+  role_arn = "{{ role_arn | default('') }}"
+
+  vpc_config {
+    {% if refs is defined and refs.subnets is defined and refs.subnets %}
+    subnet_ids = [
+      {% for subnet in refs.subnets %}
+      aws_subnet.{{ subnet.replace('-', '_') }}.id,
+      {% endfor %}
+    ]
+    {% endif %}
+  }
+
+  tags = {
+    Name = "{{ name | default('') }}"
+    {% if tags is defined and tags %}
+    {% for key, value in tags.items() %}
+    {{ key }} = "{{ value }}"
+    {% endfor %}
+    {% endif %}
+  }
+}

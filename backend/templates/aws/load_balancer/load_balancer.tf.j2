@@ -1,0 +1,30 @@
+resource "aws_lb" "{{ id.replace('-', '_') }}" {
+  name               = "{{ name | default(id | replace('_', '-')) }}"
+  internal           = {{ internal | default(false) | lower }}
+  load_balancer_type = "{{ load_balancer_type | default('application') }}"
+
+  {% if refs is defined and refs.subnets is defined and refs.subnets %}
+  subnets = [
+    {% for subnet in refs.subnets %}
+    aws_subnet.{{ subnet.replace('-', '_') }}.id,
+    {% endfor %}
+  ]
+  {% endif %}
+
+  {% if refs is defined and refs.security_groups is defined and refs.security_groups %}
+  security_groups = [
+    {% for sg in refs.security_groups %}
+    aws_security_group.{{ sg.replace('-', '_') }}.id,
+    {% endfor %}
+  ]
+  {% endif %}
+
+  tags = {
+    Name = "{{ name | default('') }}"
+    {% if tags is defined and tags %}
+    {% for key, value in tags.items() %}
+    {{ key }} = "{{ value }}"
+    {% endfor %}
+    {% endif %}
+  }
+}

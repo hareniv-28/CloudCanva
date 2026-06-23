@@ -1,0 +1,19 @@
+resource "aws_security_group" "{{ id.replace('-', '_') }}" {
+  {% if refs is defined and refs.vpc is defined %}
+  vpc_id      = aws_vpc.{{ refs.vpc.replace('-', '_') }}.id
+  {% endif %}
+  description = "{{ description | default('') }}"
+
+  tags = {
+    {% if tags is defined and tags %}
+    {% for key, value in tags.items() %}
+    {{ key }} = "{{ value }}"
+    {% endfor %}
+    {% endif %}
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+

@@ -1,0 +1,6 @@
+jinja2
+fastapi
+uvicorn
+boto3
+python-jose[cryptography]
+requests

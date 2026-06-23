@@ -1,0 +1,17 @@
+resource "aws_ecs_cluster" "{{ id.replace('-', '_') }}" {
+  name = "{{ name | default(id) }}"
+
+  setting {
+    name  = "containerInsights"
+    value = "{{ container_insights | default('enabled') }}"
+  }
+
+  tags = {
+    Name = "{{ name | default('') }}"
+    {% if tags is defined and tags %}
+    {% for key, value in tags.items() %}
+    {{ key }} = "{{ value }}"
+    {% endfor %}
+    {% endif %}
+  }
+}

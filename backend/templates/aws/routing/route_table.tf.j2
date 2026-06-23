@@ -1,0 +1,52 @@
+resource "aws_route_table" "{{ id.replace('-', '_') }}" {
+  {% if refs is defined and refs.vpc is defined %}
+  vpc_id = aws_vpc.{{ refs.vpc.replace('-', '_') }}.id
+  {% endif %}
+
+  {% if propagating_vgws is defined and propagating_vgws %}
+  propagating_vgws = [
+    {% for vgw in propagating_vgws %}
+    aws_vpn_gateway.{{ vgw.replace('-', '_') }}.id,
+    {% endfor %}
+  ]
+  {% endif %}
+
+  {% if routes is defined and routes %}
+  {% for route in routes %}
+  {% set has_gateway = (route.refs is defined and (route.refs.internet_gateway is defined and route.refs.internet_gateway)) or (refs is defined and refs.internet_gateway is defined and refs.internet_gateway) %}
+  {% set has_nat = route.refs is defined and route.refs.nat_gateway is defined and route.refs.nat_gateway %}
+  {% set has_instance = route.refs is defined and route.refs.instance is defined and route.refs.instance %}
+  {% if has_gateway or has_nat or has_instance %}
+  route {
+    cidr_block = "{{ route.cidr_block | default('0.0.0.0/0') }}"
+    {% if route.refs is defined and route.refs.internet_gateway is defined and route.refs.internet_gateway %}
+    gateway_id = aws_internet_gateway.{{ route.refs.internet_gateway.replace('-', '_') }}.id
+    {% elif refs is defined and refs.internet_gateway is defined and refs.internet_gateway %}
+    gateway_id = aws_internet_gateway.{{ refs.internet_gateway.replace('-', '_') }}.id
+    {% elif has_nat %}
+    nat_gateway_id = aws_nat_gateway.{{ route.refs.nat_gateway.replace('-', '_') }}.id
+    {% elif has_instance %}
+    instance_id = aws_instance.{{ route.refs.instance.replace('-', '_') }}.id
+    {% endif %}
+  }
+  {% endif %}
+  {% endfor %}
+  {% endif %}
+  {% if refs is defined and refs.internet_gateway is defined and refs.internet_gateway %}
+  {% if not (routes is defined and routes) %}
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.{{ refs.internet_gateway.replace('-', '_') }}.id
+  }
+  {% endif %}
+  {% endif %}
+
+  tags = {
+    Name = "{{ name | default('') }}"
+    {% if tags is defined and tags %}
+    {% for key, value in tags.items() %}
+    {{ key }} = "{{ value }}"
+    {% endfor %}
+    {% endif %}
+  }
+}

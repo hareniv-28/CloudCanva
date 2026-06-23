@@ -1,0 +1,245 @@
+%-------------------------
+% Resume in Latex
+% Author: Khushi Verma
+% License : MIT
+%------------------------
+
+\documentclass[a4paper,11pt]{article}
+\usepackage{latexsym}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{ragged2e}
+\usepackage[empty]{fullpage}
+\usepackage{wrapfig}
+\usepackage{lipsum}
+\usepackage{tabularx}
+\usepackage{titlesec}
+\usepackage{geometry}
+\usepackage{marvosym}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{fontawesome5}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{cfr-lm}
+\usepackage[T1]{fontenc}
+\setlength{\multicolsep}{0pt} 
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\geometry{left=1.4cm, top=0.6cm, right=1.2cm, bottom=0.6cm}
+\usepackage[most]{tcolorbox}
+\tcbset{
+	frame code={}
+	center title,
+	left=0pt,
+	right=0pt,
+	top=0pt,
+	bottom=0pt,
+	colback=gray!20,
+	colframe=white,
+	width=\dimexpr\textwidth\relax,
+	enlarge left by=-2mm,
+	boxsep=4pt,
+	arc=0pt,outer arc=0pt,
+}
+
+\urlstyle{same}
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-7pt}]
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[2]{
+  \item{
+    \textbf{#1}{\hspace{0.5mm}#2 \vspace{-0.5mm}}
+  }
+}
+
+\newcommand{\resumePOR}[3]{
+\vspace{0.5mm}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+        \textbf{#1}\hspace{0.3mm}#2 & \textit{\small{#3}} 
+    \end{tabular*}
+    \vspace{-2mm}
+}
+
+\newcommand{\resumeSubheading}[4]{
+\vspace{0.5mm}\item
+    \begin{tabular*}{0.98\textwidth}[t]{l@{\extracolsep{\fill}}r}
+        \textbf{#1} & \textit{\footnotesize{#4}} \\
+        \textit{\footnotesize{#3}} &  \footnotesize{#2}\\
+    \end{tabular*}
+    \vspace{-2.4mm}
+}
+
+\newcommand{\resumeProject}[4]{
+\vspace{0.5mm}\item
+    \begin{tabular*}{0.98\textwidth}[t]{l@{\extracolsep{\fill}}r}
+        \textbf{#1} & \textit{\footnotesize{#3}} \\
+        \footnotesize{\textit{#2}} & \footnotesize{#4}
+    \end{tabular*}
+    \vspace{-2.4mm}
+}
+
+\newcommand{\resumeSubItem}[2]{\resumeItem{#1}{#2}\vspace{-4pt}}
+
+\renewcommand{\labelitemi}{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=*,labelsep=0mm]}
+\newcommand{\resumeHeadingSkillStart}{\begin{itemize}[leftmargin=*,itemsep=1.7mm, rightmargin=2ex]}
+\newcommand{\resumeItemListStart}{\begin{justify}\begin{itemize}[leftmargin=3ex, rightmargin=2ex, noitemsep,labelsep=1.2mm,itemsep=0mm]\small}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}\vspace{2mm}}
+\newcommand{\resumeHeadingSkillEnd}{\end{itemize}\vspace{-2mm}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\end{justify}\vspace{-2mm}}
+\newcommand{\cvsection}[1]{%
+\vspace{2mm}
+\begin{tcolorbox}
+    \textbf{\large #1}
+\end{tcolorbox}
+    \vspace{-4mm}
+}
+
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}%
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}%
+\newcolumntype{C}{>{\centering\arraybackslash}X}%
+
+%-------------------------------------------
+
+\newcommand{\name}{Khushi Verma}
+\newcommand{\course}{Bachelor of Technology}
+\newcommand{\roll}{20243139}
+\newcommand{\phone}{9517084973}
+\newcommand{\emaila}{akakhushiverma@gmail.com}
+\newcommand{\emailb}{khushi.20243139@mnnit.ac.in}
+
+\begin{document}
+\fontfamily{cmr}\selectfont
+%----------HEADING-----------------
+
+\parbox{2.35cm}{%
+\includegraphics[width=2cm,clip]{MNNIT logo.jpg}
+}\parbox{\dimexpr\linewidth-2.8cm\relax}{
+\begin{tabularx}{\linewidth}{L r} \\
+  \textbf{\Large \name} & {\raisebox{0.0\height}{\footnotesize \faPhone}\ +91-\phone}\\
+  {Roll No.: \roll} & \href{mailto:\emaila}{\raisebox{0.0\height}{\footnotesize \faEnvelope}\ {\emaila}} \\
+  \course &  \href{mailto:\emailb}{\raisebox{0.0\height}{\footnotesize \faEnvelope}\ {\emailb}}\\
+  {Computer Science and Engineering} &  \href{https://github.com/akakhushiverma}{\raisebox{0.0\height}{\footnotesize \faGithub}\ {GitHub Profile}} \\
+  {Motilal Nehru National Institute of Technology Allahabad, Prayagraj} & \href{https://www.linkedin.com/in/khushi-verma-9517b62a7/}{\raisebox{0.0\height}{\footnotesize \faLinkedin}\ {LinkedIn Profile}}
+\end{tabularx}
+}
+
+%-----------EDUCATION-----------
+\section{\textbf{Education}}
+\resumeSubHeadingListStart
+  \resumeSubheading
+    {Motilal Nehru National Institute of Technology Allahabad}{CPI: 8.54/10 (Till 4$^{\text{th}}$ sem)}
+    {Bachelor of Technology, Computer Science and Engineering}{2024-Present}
+  \resumeSubheading
+    {Hiralal Ramniwas Inter College}{Percentage: 93.60}
+    {Intermediate, UP Board}{2021-2023}
+  \resumeSubheading
+    {Hiralal Ramniwas Inter College}{Percentage: 90.6}
+    {High School, UP Board}{2019-2021}
+\resumeSubHeadingListEnd
+\vspace{-5.5mm}
+
+%%-----------EXPERIENCE-----------------
+\section{\textbf{Experience}}
+\resumeSubHeadingListStart
+
+\resumeSubheading
+  {Amazon}{Bangalore, India}
+  {AWS Support Engineering Intern}{May 2026 - Present}
+\resumeItemListStart
+  \item {Built \textbf{CloudCanva} -- an AI-powered platform for visual AWS infrastructure design with natural language architecture generation using \textbf{Amazon Bedrock}.}
+  \item {Implemented drag-and-drop canvas with \textbf{React Flow}, smart parent-child mapping, real-time Terraform preview, architecture validation, and ZIP export.}
+  \item {Developed \textbf{FastAPI + Jinja2} backend for dynamic Terraform generation supporting VPC, EC2, S3, ECS, Load Balancer, Security Groups, and more.}
+  \item {\textbf{Tech}: Next.js, TypeScript, Tailwind CSS, React Flow, Zustand, FastAPI, Python, Jinja2, Terraform, Amazon Bedrock, Cognito, Amplify, S3}
+\resumeItemListEnd
+
+\resumeSubHeadingListEnd
+\vspace{-5.5mm}
+
+%-----------PROJECTS-----------------
+\section{\textbf{Personal Projects}}
+\resumeSubHeadingListStart
+
+\resumeProject
+  {\href{https://github.com/kg29185048/IntelliQuery/}{IntelliQuery}}
+  {AI-powered NL-to-database query agent supporting SQL and MongoDB.}
+  {December 2025}
+  {}
+
+\resumeItemListStart
+  \item {\textbf{Tech}: LangGraph, LangChain, FastAPI, Groq API (LLaMA 3.1), MongoDB, PostgreSQL, MySQL, React, FastMCP}
+  \item {Built multi-agent pipeline using LangGraph for natural language to SQL/MongoDB translation with safety layers and conversational memory.}
+  \item {Developed full-stack app with FastAPI backend, React frontend, and MCP integration with Claude.}
+\resumeItemListEnd
+\vspace{-2mm}
+
+\resumeProject
+  {\href{https://github.com/akakhushiverma/TripSync}{TripSync}}
+  {Agent-based travel planning platform with AI chatbot for personalized itineraries.}
+  {October 2025}
+  {}
+
+\resumeItemListStart
+  \item {\textbf{Tech}: React.js, Node.js, Express.js, MongoDB, JWT, NLP (Compromise), react-chatbot-kit}
+  \item {Built personalized itinerary generator integrating OpenWeatherMap, SerpAPI, OpenRouteService, Google Maps \& Calendar APIs.}
+  \item {Implemented JWT auth, MongoDB storage, and rule-based NLP chatbot for travel queries.}
+\resumeItemListEnd
+\vspace{-2mm}
+
+\resumeSubHeadingListEnd
+\vspace{-5.5mm}
+
+%-----------Technical skills-----------------
+\section{\textbf{Technical Skills and Interests}}
+\begin{itemize}[leftmargin=0.05in, label={}]
+\small{\item{
+  \textbf{Languages}{: Java, C, C++, Python, TypeScript, JavaScript} \\
+  \textbf{Web \& Frameworks}{: Next.js, React.js, Node.js, Express.js, Tailwind CSS, Bootstrap} \\
+  \textbf{AI/ML}{: LangChain, LangGraph, Amazon Bedrock, Groq API (LLaMA 3.1)} \\
+  \textbf{Databases}{: MongoDB, PostgreSQL, MySQL, SQLite} \\
+  \textbf{Backend \& Cloud}{: FastAPI, Jinja2, Terraform, AWS (Amplify, EC2, S3, Cognito, Bedrock)} \\
+  \textbf{Tools}{: Git, GitHub, VS Code, React Flow, Zustand, FastMCP, JSZip} \\
+  \textbf{Coursework}{: Data Structures and Algorithms, OOP} \\
+}}
+\end{itemize}
+\vspace{-16pt}
+
+%-----------Achievements-----------------
+\section{\textbf{Achievements}}
+\vspace{-0.4mm}
+\resumeSubHeadingListStart
+
+\resumePOR{.}
+{Secured \href{https://drive.google.com/drive/folders/1L8uq5pH7WjI1z3g8GSZ076AgtLmBYh1y}{\textbf{4th position}} in \textbf{Smart India Hackathon (SIH) 2025} -- Internal Hackathon Round, competing among multiple teams at the institute level.}
+{September 2025}
+
+\resumePOR{.}
+{Selected as an \href{https://drive.google.com/drive/folders/1L8uq5pH7WjI1z3g8GSZ076AgtLmBYh1y}{\textbf{AFE-FFE Scholar}} (Amazon Future Engineer \& Foundation For Excellence) -- a premier scholarship\\ program supporting women in engineering, selected among 40,000+ applicants for academic excellence and leadership potential.}
+{}
+
+\resumeSubHeadingListEnd
+\vspace{-2mm}
+
+\section{\textbf{Coding Profile}}
+\resumeSubHeadingListStart
+\resumePOR{.}
+{\textbf{LeetCode}: \href{https://leetcode.com/u/ablazed_heart/}{Khushi Verma} (Max rating: 1759, 400+ problems solved)}{}
+\resumePOR{.}
+{\textbf{Codeforces}: \href{https://codeforces.com/profile/khushiverma39}{Khushi Verma}}{}
+\resumeSubHeadingListEnd
+\vspace{-5mm}
+
+\end{document}

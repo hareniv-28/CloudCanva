@@ -1,0 +1,8 @@
+resource "aws_route_table_association" "{{ id.replace('-', '_') }}" {
+  {% if refs is defined and refs.subnet is defined %}
+  subnet_id      = aws_subnet.{{ refs.subnet.replace('-', '_') }}.id
+  {% endif %}
+  {% if refs is defined and refs.route_table is defined %}
+  route_table_id = aws_route_table.{{ refs.route_table.replace('-', '_') }}.id
+  {% endif %}
+}

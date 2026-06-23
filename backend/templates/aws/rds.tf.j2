@@ -1,0 +1,41 @@
+resource "aws_db_subnet_group" "{{ id.replace('-', '_') }}_subnet_group" {
+  name       = "{{ id.replace('-', '-') }}-subnet-group"
+  subnet_ids = [
+    {% if refs is defined and refs.subnets is defined and refs.subnets %}
+    {% for subnet in refs.subnets %}
+    aws_subnet.{{ subnet.replace('-', '_') }}.id,
+    {% endfor %}
+    {% elif refs is defined and refs.subnet is defined %}
+    aws_subnet.{{ refs.subnet.replace('-', '_') }}.id,
+    {% endif %}
+  ]
+
+  tags = {
+    Name = "{{ name | default(id) }}-subnet-group"
+  }
+}
+
+resource "aws_db_instance" "{{ id.replace('-', '_') }}" {
+  identifier          = "{{ name | default(id) | replace('_', '-') }}"
+  engine              = "{{ engine | default('mysql') }}"
+  instance_class      = "{{ instance_class | default('db.t3.micro') }}"
+  allocated_storage   = {{ allocated_storage | default(20) }}
+  db_name             = "{{ db_name | default('appdb') }}"
+  username            = "{{ username | default('dbadmin') }}"
+  password            = "{{ password | default('changeme123') }}"
+  skip_final_snapshot = true
+  db_subnet_group_name = aws_db_subnet_group.{{ id.replace('-', '_') }}_subnet_group.name
+
+  {% if refs is defined and refs.security_group is defined %}
+  vpc_security_group_ids = [aws_security_group.{{ refs.security_group.replace('-', '_') }}.id]
+  {% endif %}
+
+  tags = {
+    Name = "{{ name | default('') }}"
+    {% if tags is defined and tags %}
+    {% for key, value in tags.items() %}
+    {{ key }} = "{{ value }}"
+    {% endfor %}
+    {% endif %}
+  }
+}

@@ -806,7 +806,7 @@ def generate_with_bedrock(prompt: str, region: str = "eu-north-1", region_conf: 
         "messages": [{"role": "user", "content": system_prompt + "\n\nUser requirement: " + prompt}]
     })
     response = client.invoke_model(
-        modelId="eu.anthropic.claude-sonnet-4-6",
+        modelId="anthropic.claude-3-sonnet-20240229-v1:0",
         body=body,
         contentType="application/json"
     )

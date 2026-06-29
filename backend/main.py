@@ -763,6 +763,13 @@ def post_process_ai_response(data: dict, region: str = "eu-north-1", region_conf
             if not props["refs"].get("subnets") and subnet_ids:
                 props["refs"]["subnets"] = subnet_ids[:2]  # need at least 2 subnets
 
+        elif label == "TargetGroup":
+            # TargetGroup must reference a VPC (required when target_type is "instance")
+            if not props.get("refs"):
+                props["refs"] = {}
+            if not props["refs"].get("vpc") and vpc_id:
+                props["refs"]["vpc"] = vpc_id
+
         elif label == "RDS":
             # RDS needs subnets in at least 2 AZs for the subnet group
             if not props.get("refs"):

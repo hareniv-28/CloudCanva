@@ -40,9 +40,12 @@ class TerraformOrchestrator:
                         provider = service.get("provider")
                         service_type = service.get("type")
                         template_name = f"{provider}_{service_type}"
-                        generator = GenericTemplateGenerator(service, self.template_registry, template_name)
-                        rendered_template = generator.render()
-                        # tf_blocks[infra_name]["tf"].append(rendered_template)
+                        try:
+                            generator = GenericTemplateGenerator(service, self.template_registry, template_name)
+                            rendered_template = generator.render()
+                        except ValueError as e:
+                            print(f"Skipping unsupported resource '{template_name}': {e}")
+                            continue
                         if provider == "kubernetes":
                             service_name = service["metadata"]["name"]
                             tf_blocks[infra_name]["k8s"][service_name] = {"type": "yaml", "code": rendered_template}

@@ -34,6 +34,9 @@ class TemplateRegistry:
             )
 
     def get_template(self, name: str):
+        # Normalize double-prefixed names (e.g., aws_aws_nat_gateway -> aws_nat_gateway)
+        if name not in self._template_map and name.startswith("aws_aws_"):
+            name = "aws_" + name[8:]  # Strip the extra "aws_" prefix
         if name not in self._template_map:
             raise ValueError(f"Template '{name}' not found in template map.")
         return TemplateRegistry._env.get_template(self._template_map[name])

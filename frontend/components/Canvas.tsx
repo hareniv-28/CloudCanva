@@ -955,7 +955,7 @@ export default function Canvas({ aiNodes, aiEdges, selectedRegion = "eu-north-1"
 
       {/* Right panel (Properties) */}
       <div
-        className={`flex-shrink-0 border-l border-slate-700 p-3 overflow-y-scroll bg-[#0a0f1a] transition-all duration-300 ease-in-out ${
+        className={`dark flex-shrink-0 border-l border-slate-700 p-3 overflow-y-scroll bg-[#0a0f1a] transition-all duration-300 ease-in-out ${
           rightPanelCollapsed ? "w-0 opacity-0 overflow-hidden" : ""
         }`}
         style={{ width: rightPanelCollapsed ? 0 : `${rightPanelWidth}px` }}

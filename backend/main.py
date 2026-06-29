@@ -678,6 +678,12 @@ def post_process_ai_response(data: dict, region: str = "eu-north-1", region_conf
         if "refs" not in props:
             props["refs"] = {}
 
+        # Ensure every node has a name property (needed for Terraform export)
+        if not props.get("name"):
+            service_name = node.get("data", {}).get("serviceName", "")
+            if service_name:
+                props["name"] = service_name.lower().replace(" ", "-")
+
         if label == "Subnet":
             # Subnet must reference a VPC
             if not props["refs"].get("vpc") and vpc_id:
@@ -709,7 +715,18 @@ def post_process_ai_response(data: dict, region: str = "eu-north-1", region_conf
             # SecurityGroup must reference a VPC
             if not props["refs"].get("vpc") and vpc_id:
                 props["refs"]["vpc"] = vpc_id
-            
+
+            # Ensure SecurityGroup has at least default ingress/egress rules
+            if not props.get("ingress") or len(props.get("ingress", [])) == 0:
+                props["ingress"] = [
+                    {"protocol": "tcp", "from_port": 80, "to_port": 80, "cidr_blocks": ["0.0.0.0/0"], "description": "HTTP"},
+                    {"protocol": "tcp", "from_port": 443, "to_port": 443, "cidr_blocks": ["0.0.0.0/0"], "description": "HTTPS"},
+                ]
+            if not props.get("egress") or len(props.get("egress", [])) == 0:
+                props["egress"] = [
+                    {"protocol": "-1", "from_port": 0, "to_port": 0, "cidr_blocks": ["0.0.0.0/0"], "description": "All outbound"},
+                ]
+
             # Security guardrails: fix risky ingress rules
             sensitive_ports = {22: "SSH", 3306: "MySQL", 5432: "PostgreSQL", 6379: "Redis", 27017: "MongoDB"}
             for rule in props.get("ingress", []):
